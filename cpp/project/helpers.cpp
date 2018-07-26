@@ -33,7 +33,7 @@ using namespace std;
 */
 vector< vector<float> > normalize(vector< vector <float> > grid) {
 	
-	vector< vector<float> > newGrid;
+	vector< vector <float> > newGrid;
   vector<float> newRow;
   float total = 0.0;
   for (int row = 0; row < grid.size(); ++row) {

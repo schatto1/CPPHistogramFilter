@@ -40,8 +40,21 @@ using namespace std;
 */
 vector< vector <float> > initialize_beliefs(vector< vector <char> > grid) {
 	vector< vector <float> > newGrid;
+  vector<float> newGridRow;
 
-	// your code here
+	vector<float>::size_type height = grid.size();
+  vector<float>::size_type width = grid[0].size();
+
+  float area = height * width;
+  float belief_per_cell = 1.0 / area;
+
+  for (int row = 0; row < height; ++row) {
+    for (int column = 0; column < width; ++column) {
+      newGridRow.push_back(belief_per_cell);
+    }
+    newGrid.push_back(newGridRow);
+    newGridRow.clear();
+  }
 	
 	return newGrid;
 }
@@ -58,7 +71,7 @@ vector< vector <float> > initialize_beliefs(vector< vector <char> > grid) {
 		   (vector of vectors of chars) where each char represents a 
 		   color. For example:
 
-		   g g g
+		     g g g
     	   g r g
     	   g g g
 
