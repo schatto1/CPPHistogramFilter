@@ -88,16 +88,16 @@ vector< vector<float> > normalize(vector< vector <float> > grid) {
 */
 vector < vector <float> > blur(vector < vector < float> > grid, float blurring) {
 
-  int height = grid.size();
-  int width = grid[0].size();
+  vector<float>::size_type height = grid.size();
+  vector<float>::size_type width = grid[0].size();
 
-	vector < vector <float> > newGrid;
+	vector < vector <float> > newGrid(grid.size(), vector<float>(grid[0].size(), 0.0));
 
   float center_prob = 1.0 - blurring;
   float corner_prob = blurring / 12.0;
   float adjacent_prob = blurring / 6.0;
 
-  // Create blur window grid
+  //Create blur window grid
   vector < vector <float> > window;
 
   vector <float> windowRow1;
@@ -121,12 +121,19 @@ vector < vector <float> > blur(vector < vector < float> > grid, float blurring) 
   for (int row = 0; row < height; ++row) {
     for (int column = 0; column < width; ++column) {
       grid_val = grid[row][column];
+      // cout << "Grid value is " << grid_val << endl;
       for (int dx = -1; dx < 2; ++dx) {
+        // cout << "dx is " << dx << endl;
         for (int dy = -1; dy < 2; ++dy) {
-          mult = window[dy+1][dx+1];
+          // cout << "dy is " << dy << endl;
+          mult = window[dx+1][dy+1];
+          // cout << "mult is " << mult << endl;
           new_row = (row + dy) % height;
+          // cout << "new_row is " << new_row << endl;
           new_column = (column + dx) % width;
+          // cout << "new_column is " << new_column << endl;
           newGrid[new_row][new_column] += mult * grid_val;
+          // cout << "newGrid is " << newGrid[new_row][new_column] << endl;
         }
       }
     }
