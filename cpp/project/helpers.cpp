@@ -88,9 +88,49 @@ vector< vector<float> > normalize(vector< vector <float> > grid) {
 */
 vector < vector <float> > blur(vector < vector < float> > grid, float blurring) {
 
+  int height = grid.size();
+  int width = grid[0].size();
+
 	vector < vector <float> > newGrid;
-	
-	// your code here
+
+  float center_prob = 1.0 - blurring;
+  float corner_prob = blurring / 12.0;
+  float adjacent_prob = blurring / 6.0;
+
+  // Create blur window grid
+  vector < vector <float> > window;
+
+  vector <float> windowRow1;
+  windowRow1.push_back(corner_prob);
+  windowRow1.push_back(adjacent_prob);
+  windowRow1.push_back(corner_prob);
+
+  vector <float> windowRow2;
+  windowRow2.push_back(adjacent_prob);
+  windowRow2.push_back(center_prob);
+  windowRow2.push_back(adjacent_prob);
+
+  window.push_back(windowRow1);
+  window.push_back(windowRow2);
+  window.push_back(windowRow1);
+
+  float grid_val = 0.0;
+  float mult = 0.0;
+  float new_row = 0.0;
+  float new_column = 0.0;
+  for (int row = 0; row < height; ++row) {
+    for (int column = 0; column < width; ++column) {
+      grid_val = grid[row][column];
+      for (int dx = -1; dx < 2; ++dx) {
+        for (int dy = -1; dy < 2; ++dy) {
+          mult = window[dy+1][dx+1];
+          new_row = (row + dy) % height;
+          new_column = (column + dx) % width;
+          newGrid[new_row][new_column] += mult * grid_val;
+        }
+      }
+    }
+  }
 
 	return normalize(newGrid);
 }
