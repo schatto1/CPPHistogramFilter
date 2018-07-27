@@ -91,7 +91,7 @@ vector < vector <float> > blur(vector < vector < float> > grid, float blurring) 
   vector<float>::size_type height = grid.size();
   vector<float>::size_type width = grid[0].size();
 
-	vector < vector <float> > newGrid(grid.size(), vector<float>(grid[0].size(), 0.0));
+	vector < vector <float> > newGrid(height, vector<float>(width, 0.0));
 
   float center_prob = 1.0 - blurring;
   float corner_prob = blurring / 12.0;

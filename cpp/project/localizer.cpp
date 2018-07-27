@@ -103,8 +103,35 @@ vector< vector <float> > sense(char color,
 	float p_miss) 
 {
 	vector< vector <float> > newGrid;
+  vector<float> newGridRow;
 
-	// your code here
+  vector<float>::size_type height = grid.size();
+  vector<float>::size_type width = grid[0].size();
+
+	// float belief_sum = 0.0;
+
+  for (int row = 0; row < height; ++row) {
+    for (int column = 0; column < width; ++column) {
+      if (color == grid[row][column]) {
+        newGridRow.push_back(beliefs[row][column] * p_hit);
+      }
+      else {
+        newGridRow.push_back(beliefs[row][column] * p_miss);
+      }
+    }
+    newGrid.push_back(newGridRow);
+
+    // for (int i = 0; i < newGridRow.size(); ++i) {
+    //   belief_sum += newGridRow[i];
+    // }
+    newGridRow.clear();
+  }
+
+  // for (int row = 0; row < newGrid.size(); ++row) {
+  //   for (int column = 0; column < newGrid[row].size(); ++column) {
+  //     newGrid[row][column] /= belief_sum;
+  //   }
+  // }
 
 	return normalize(newGrid);
 }
