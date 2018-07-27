@@ -178,10 +178,20 @@ vector< vector <float> > move(int dy, int dx,
 	vector < vector <float> > beliefs,
 	float blurring) 
 {
+  vector<float>::size_type height = beliefs.size();
+  vector<float>::size_type width = beliefs[0].size();
 
-	vector < vector <float> > newGrid;
+	vector < vector <float> > newGrid(height, vector<float>(width, 0.0));
 
-	// your code here
+  float new_row = 0.0;
+  float new_column = 0.0;
+  for (int row = 0; row < height; ++row) {
+    for (int column = 0; column < width; ++column) {
+      new_row = (row + dy) % height;
+      new_column = (column + dx) % width;
+      newGrid[(int) new_row][(int) new_column] = beliefs[row][column];
+    }
+  }
 
 	return blur(newGrid, blurring);
 }
